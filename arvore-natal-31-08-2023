@@ -1,0 +1,94 @@
+int pushbutton = 2; // declara o push button na porta 2
+int led = 13; // declara led na porta 13
+bool estadoled = 0; // variavel de controle
+int estado = 1;
+unsigned long tempo = millis();
+unsigned long tempo1 = millis();
+int teste = 0;
+int onPress;
+
+void setup()
+{
+  pinMode(pushbutton, INPUT); // define o pino do botao como entrada
+  pinMode(13, OUTPUT);// define LED como saida
+  pinMode(12, OUTPUT);
+  pinMode(11, OUTPUT);
+  Serial.begin(9600);
+}
+
+
+void loop()
+{
+
+onPress = digitalRead(pushbutton);
+Serial.println(onPress);
+
+switch(estado){
+  case 1:
+   
+    tempo1 = millis();
+    if (tempo1 - tempo > 1000){
+      digitalWrite(13, teste);
+      digitalWrite(12, teste);
+      digitalWrite(11, teste);
+      teste = !teste;
+    tempo = tempo1;
+    }
+
+    if (onPress == 1) {
+      teste = 0;
+      estado = 2;  
+    }
+    break;
+   case 2:
+     if (onPress == 1) {
+      teste = 0;
+      estado = 3;  
+    }
+     tempo1 = millis();
+     if (tempo1 - tempo > 1000){
+        teste = !teste;
+        digitalWrite(13, teste);
+     }
+     if(tempo1 - tempo > 2000){
+         digitalWrite(12, teste);
+     }
+
+      if(tempo1 - tempo > 3000){
+         digitalWrite(11, teste);
+     }
+
+     if(tempo1 - tempo > 6000){
+        tempo = tempo1;
+     }
+    break;
+    case 3:
+  if (onPress == 1) {
+      estado = 1;  
+    }
+     tempo1 = millis();
+     if (tempo1 - tempo > 1000){
+        digitalWrite(13, HIGH);
+        digitalWrite(12, LOW);
+        digitalWrite(11, LOW);
+     }
+     if(tempo1 - tempo > 2000){
+        digitalWrite(13, LOW);
+        digitalWrite(12, HIGH);
+        digitalWrite(11, LOW);
+     }
+
+      if(tempo1 - tempo > 3000){
+         digitalWrite(13, LOW);
+         digitalWrite(12, LOW);
+         digitalWrite(11, HIGH);
+     }
+
+     if(tempo1 - tempo > 3000){
+        tempo = tempo1;
+     }
+    
+    break;
+ }
+   
+}
