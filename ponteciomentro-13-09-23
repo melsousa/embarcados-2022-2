@@ -1,0 +1,39 @@
+#define DELAY 20 // Atraso entre duas medições em ms
+#define MIN_RAW 0 // Valor mínimo analógico
+#define MAX_RAW 1023 // Valor Máximo analógico
+#define MIN_CMD 0 // Valor mínimo digital
+#define MAX_CMD 200 // Valor máximo analógico
+
+//Parâmetros
+const int sensorPin = A0; 
+const int ledPin = 12; 
+
+//Variáveis
+int sensorVal; // Valor analógico do sensor
+int cmd; //Valor do comando LED
+
+
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ledPin,OUTPUT);
+}
+
+void loop() {
+  sensorVal = analogRead(sensorPin);
+  cmd=sensorToLed(sensorVal);
+  analogWrite(ledPin,cmd);
+  delay(DELAY);
+  Serial.print("Sensor : ");
+  Serial.println(sensorVal);
+  Serial.print("Command : ");
+  Serial.println(cmd);
+
+}
+
+int sensorToLed(int raw){
+  int val = map(sensorVal, MIN_RAW, MAX_RAW, MIN_CMD, MAX_CMD);
+  val=max(val,MIN_CMD);
+  val=min(val,MAX_CMD);
+  return val;
+}
