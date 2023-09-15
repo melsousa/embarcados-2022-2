@@ -1,0 +1,64 @@
+#define trigger 6
+#define echo 7
+int distancia = 0;
+int tempo = 0;
+int ledAma = 13;
+int ledVer = 11;
+int ledVed = 9;
+int pib = 12;
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(trigger, OUTPUT);
+  pinMode(echo, INPUT);
+  pinMode(ledAma, OUTPUT);
+  pinMode(ledVer, OUTPUT);
+  pinMode(ledVed, OUTPUT);
+  pinMode(pib, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (distancia > 25 ){
+    digitalWrite(ledVed, HIGH);
+    digitalWrite(ledAma, LOW);
+    digitalWrite(ledVer, LOW);
+    
+  }else if (distancia > 10){
+     digitalWrite(ledAma, HIGH);
+     digitalWrite(ledVed, LOW);
+     digitalWrite(ledVer, LOW);
+     digitalWrite(pib, HIGH);
+     
+     
+  }else {
+    digitalWrite(ledVer, HIGH);
+    digitalWrite(ledAma, LOW);
+    digitalWrite(ledVed, LOW);
+     
+    digitalWrite(pib, HIGH);
+    delay(100);
+    digitalWrite(pib, LOW);
+    delay(100);
+  }
+  
+ 
+  
+  
+  //digitalWrite(pib, HIGH);
+  // put your main code here, to run repeatedly:
+  digitalWrite(trigger, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(trigger, HIGH);
+  delayMicroseconds(10);
+
+  tempo = pulseIn(echo, HIGH);
+
+  distancia = int(tempo*0.034)/2;
+
+  Serial.print(distancia);
+  Serial.println(" cm");
+
+  
+  
+}
