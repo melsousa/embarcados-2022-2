@@ -1,0 +1,21 @@
+int pinLed = 13;
+int pinSensor = 7;
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(pinLed, OUTPUT);
+  pinMode(pinSensor, INPUT);
+  Serial.begin(9600);
+
+}
+
+void loop() {
+  int leit = digitalRead(pinSensor);
+  Serial.println(leit);
+  if (leit == 1){
+    digitalWrite(pinLed, HIGH);
+  }else{
+    digitalWrite(pinLed, LOW);
+  }
+  
+  
+}
