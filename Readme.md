@@ -11,6 +11,9 @@ Este arquivo contém dados de coerência de modelos de tópicos gerados usando d
 O arquivo está organizado da seguinte forma:
 
 coherence,metrica,num_topics
+
 0.8491,c_v,2
+
 0.8647,c_npmi,4
+
 0.7566,u_mass,6
